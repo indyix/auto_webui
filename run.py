@@ -7,5 +7,5 @@ ts = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
 if __name__ == "__main__":
     # pytest.main(["--html={}.html".format(ts), "-m error_test"])
-    pytest.main(["--alluredir=allureout".format(ts), "-m error_test"])
+    pytest.main(["--alluredir=allureout".format(ts), "-m hidedata"])
     

@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 #-*- coding:utf-8 -*-
-# email: wagyu2016@163.com
-# wechat: shoubian01
-# author: 王雨泽
-import os
 
+import os
 from common import yaml_handler, excel_handler, logging_handler, requests_handler
 from config import config
 

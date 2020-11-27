@@ -2,8 +2,10 @@ import os
 from datetime import datetime
 
 from selenium.webdriver import ActionChains
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver import Chrome
 
 from config import config
 from middleware.handler import Handler
@@ -15,25 +17,45 @@ class BasePage:
     title = None
 
     def __init__(self, driver):
-        self.driver = driver
+        self.driver:Chrome = driver
         # self.title = None
-        try:
-            WebDriverWait(self.driver, 20).until(
-                expected_conditions.title_contains(self.title)
-            )
-        except:
-            print("你的操作可能没有进入对应的页面，可能会引发异常{}".format(self.title))
+        # try:
+        #     WebDriverWait(self.driver, 20).until(
+        #         expected_conditions.title_contains(self.title)
+        #     )
+        # except:
+        #     print("你的操作可能没有进入对应的页面，可能会引发异常{}".format(self.title))
 
 
     def find_element(self, locator):
         """查找元素"""
         try:
-            el = self.driver.find_element(*locator)
+            el:WebElement= self.driver.find_element(*locator)
             return el
         except:
             # 如果找不到元素，截图
             self.screen_shot()
             Handler.logger.error("元素找不到{}".format(locator))
+
+    def find_element_visible(self, locator):
+        """查找可见的元素"""
+        try:
+            el:WebElement= self.wait_element_visible(locator)
+            return el
+        except:
+            # 如果找不到元素，截图
+            self.screen_shot()
+            Handler.logger.error("可见元素找不到：{}".format(locator))
+
+    def find_element_clickable(self, locator):
+        """查找可见的元素"""
+        try:
+            el:WebElement= self.wait_element_clickable(locator)
+            return el
+        except:
+            # 如果找不到元素，截图
+            self.screen_shot()
+            Handler.logger.error("可点元素找不到：{}".format(locator))
 
     def screen_shot(self):
         """截图"""
